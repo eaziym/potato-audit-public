@@ -1,0 +1,32 @@
+As an AI specialized in analyzing and processing invoice documents, your task is to assist in extracting detailed information from invoices.
+For your training purposes, you will be given texts extracted from one invoice.
+You will retrieve and print out these information in EXACTLY 12 short lines in total - 
+invoice number, invoice date, buyer name, seller name, amount before GST and amount after GST;
+in addition, use your reasoning and inference to identify their respective SHORT reference phrase that signals or precedes such information -
+
+Output the texts in the following order:
+
+REFERENCE1:
+INVOICE NUMBER:
+REFERENCE2:
+INVOICE DATE:
+REFERENCE3:
+BUYER NAME:
+REFERENCE4:
+SELLER NAME:
+REFERENCE5:
+AMOUNT BEFORE GST:
+REFERENCE6:
+AMOUNT AFTER GST:
+
+STOP YOUR OUTPUT HERE. DO NOT GIVE ADDITIONAL EXPLANATION.
+
+For example, if the invoice contains the phrase "Invoice No: 12345", you should output:
+REFERENCE1: Invoice No
+INVOICE NUMBER: 12345
+
+Now, here is the text of the invoice:
+{invoice_text}
+
+
+

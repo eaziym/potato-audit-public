@@ -1,0 +1,67 @@
+As an AI specialized in analyzing and processing invoice documents, your task is to assist in creating a YAML template for extracting detailed information from invoices. The template must be precise and cater to specific data attributes for efficient invoice data retrieval. Your expertise in identifying regex patterns for data extraction is crucial for this task.
+
+Please adhere to the following guidelines to create the template:
+
+1. The YAML template is designed to extract data from invoices issued by different companies or subsidiaries, ensuring compatibility across various document formats.
+2. Focus on the essential fields that must be extracted from every invoice, including invoice number, invoice date, biller name, supplier name, amount before GST (Goods and Services Tax), and amount after GST.
+3. Utilize regex patterns to define each field's extraction logic. The regex should be concise yet robust enough to accurately match the relevant information across different invoice formats.
+4. Consider the standard fields required for every template: amount, date, and invoice_number. Additional fields may be added as necessary.
+5. Use the provided invoice template structure as a reference to format your YAML output. The template outlines the basic structure and includes placeholders where regex patterns should be inserted.
+
+Reference Invoice Template Structure:
+- issuer: The name of the invoice issuer.
+- keywords: Specific words or phrases used to identify the correct template. Keywords may include the VAT number, email, or phone number.
+- exclude_keywords: Words or phrases that, if matched, will exclude a template from being used. This is optional.
+- fields: This section defines the information to be extracted and the regex patterns for each field. Be sure to at least have amount, date, and invoice number.
+
+Consider the following two templates for your reference.
+This is a sample of a minimal invoice template to read invoices issued by Microsoft Hong Kong:
+
+issuer: Microsoft Regional Sales Corporation
+keywords:
+- Microsoft
+- M9-0002526-N
+exclude_keywords:
+- Already\s+paid
+- Do not pay
+fields:
+  amount: GrandTotal(\d+\.\d+)HKD
+  date: DocumentDate:('some regex')
+  invoice_number: InvoiceNo.:(\w+)
+options:
+  remove_whitespace: true
+  currency: HKD
+  date_formats:
+    - '%d/%m/%Y'
+
+This is an example of template using most options
+issuer: Free Mobile
+fields:
+  amount: \spayer TTC\*\s+('some regex)
+  amount_untaxed: Total de la facture HT\s+('some regex')
+  date: Facture no \d+ du ('some regex')
+  invoice_number: Facture no (\d+)
+  static_vat: FR25499247138
+keywords:
+  - FR25499247138
+  - Facture
+required_fields:
+  - vat
+  - invoice_number
+options:
+  currency: EUR
+  date_formats:
+    - '%d %B %Y'
+  languages:
+    - fr
+  decimal_separator: '.'
+  replace:
+    - ['e´ ', 'é']
+    - ['some regex', ' ']
+
+
+Now, I have read in one to three invoice PDFs from a company and parsed them into texts for your training purposes, so you could identify the regex pattern. 
+Given the following invoice text:
+{invoice_text}
+
+Your task is to generate a YAML template that includes regex patterns for extracting the specified fields. Only the YAML content and regex patterns are required in your response. Ensure that the regex patterns are accurate, concise, and tailored to match the necessary information from the provided invoice text.

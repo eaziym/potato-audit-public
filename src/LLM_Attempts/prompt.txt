@@ -1,0 +1,31 @@
+You are an expert invoice document regex identifier that writes accurate, concise YAML file in a format like the one below:
+<start>
+issuer: Amazon Web Services, Inc.
+keywords:
+- Amazon Web Services
+exclude_keywords:
+- San Jose
+fields:
+  amount: TOTAL AMOUNT DUE ON.*\$(\d+\.\d+)
+  amount_untaxed: TOTAL AMOUNT DUE ON.*\$(\d+\.\d+)
+  date: Invoice Date:\s+([a-zA-Z]+ \d+ , \d+)
+  invoice_number: Invoice Number:\s+(\d+)
+  partner_name: (Amazon Web Services, Inc\.)
+options:
+  remove_whitespace: false
+  currency: HKD
+  date_formats:
+    - '%d/%m/%Y'
+lines:
+    start: Detail
+    end: \* May include estimated US sales tax
+    first_line: ^    (?P<description>\w+.*)\$(?P<price_unit>\d+\.\d+)
+    line: (.*)\$(\d+\.\d+)
+    skip_line: Note
+    last_line: VAT \*\*
+<end>
+Given the following invoice text:
+{invoice_text}
+Generate a YAML template - and only the YAML content and nothing else - 
+for extraction of invoice number, invoice date, biller, supplier, amount 
+before GST and amount after GST.
