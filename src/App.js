@@ -146,7 +146,7 @@ function App() {
       }, [processedData]);
 
       const fetchAnnouncementsForToday = async () => {
-        alert('Fetching announcements for today...');
+        alert('Fetching announcements for yesterday...');
         try {
             const response = await axios.post('/fetch-todays-announcements', {
                 companies: companies,
@@ -204,7 +204,7 @@ function App() {
                                 placeholder="Enter download directory path"
                                 style={{ width: '100%', margin: '10px 0' }} // Ensures the input is fully visible and comfortably spaced
                             />
-                            <button onClick={fetchAnnouncementsForToday}>Fetch Today's Announcements</button>
+                            <button onClick={fetchAnnouncementsForToday}>Fetch Yesterday's Announcements</button>
                         </div>
 
                         {/* KAM Download Directory Input */}

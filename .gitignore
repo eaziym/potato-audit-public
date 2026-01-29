@@ -1,0 +1,10 @@
+/node_modules/.cache
+/node_modules/.cache
+/src/__pycache__
+**/.DS_Store
+/.env
+/.env.local
+/.env.development.local
+/build
+/node_modules
+node_modules

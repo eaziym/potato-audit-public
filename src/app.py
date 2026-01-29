@@ -99,8 +99,8 @@ def fetch_todays_announcements():
     results = fetch_announcements_for_companies(companies)
 
     # Save results to CSV
-    today = datetime.datetime.now().strftime("%Y-%m-%d")
-    filename = f"{today}_announcements.csv"
+    yesterday = (datetime.datetime.now() - datetime.timedelta(days=1)).strftime("%Y-%m-%d")
+    filename = f"{yesterday}_announcements.csv"
     filepath = os.path.join(downloadDir, filename)  # Save the file in the provided download directory
     with open(filepath, 'w', newline='') as csvfile:
         fieldnames = ['date', 'company', 'title', 'link']

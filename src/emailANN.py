@@ -1,9 +1,24 @@
+from datetime import datetime, timedelta
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import openpyxl
 import csv
 
+
+def get_previous_working_day():
+    """Get the previous working day (skips weekends)"""
+    today = datetime.now()
+    # Monday = 0, Sunday = 6
+    if today.weekday() == 0:  # Monday
+        # Go back 3 days to Friday
+        return today - timedelta(days=3)
+    elif today.weekday() == 6:  # Sunday
+        # Go back 2 days to Friday
+        return today - timedelta(days=2)
+    else:
+        # Go back 1 day for any other day
+        return today - timedelta(days=1)
 
 def create_html_table(announcements):
     """ Convert announcements to HTML table with improved styling """
@@ -50,9 +65,10 @@ def create_html_table(announcements):
 
 def generate_email_content(html_table):
     """Generate the full HTML content for the email, including introductory text."""
+    previous_working_day = get_previous_working_day()
     introduction = """
     <p>Hi All!</p>
-    <p>Here are the latest SGX announcements for today:</p>
+    <p>Here are the latest SGX announcements for """ + previous_working_day.strftime("%A, %Y-%m-%d") + """:</p>
     """
     # Combine introduction with the HTML table
     html_content = introduction + html_table
